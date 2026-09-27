@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Doctors{% endblock %}
+{% block content %}
+<h2>Doctors</h2>
+<div class="panel"><h3>Add doctor</h3>
+<form method="post" class="grid">
+    <input name="name" placeholder="Doctor name" required>
+    <input name="specialisation" placeholder="Specialisation" required>
+    <input name="phone" placeholder="Phone" required>
+    <input name="fee" type="number" step="0.01" min="0" placeholder="Consultation fee" required>
+    <button type="submit">Add doctor</button>
+</form></div>
+<div class="panel">
+<form method="get" class="row">
+    <select name="specialisation" style="max-width:260px">
+        <option value="">All specialisations</option>
+        {% for s in specList %}<option {% if s.specialisation == selectedSpec %}selected{% endif %}>{{ s.specialisation }}</option>{% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+{% if doctorList %}<div class="tableWrap"><table>
+    <tr><th>ID</th><th>Name</th><th>Specialisation</th><th>Phone</th><th>Fee</th><th></th></tr>
+    {% for d in doctorList %}<tr>
+        <td>{{ d.doctorId }}</td><td>Dr. {{ d.name }}</td><td>{{ d.specialisation }}</td>
+        <td>{{ d.phone }}</td><td>Rs {{ d.fee }}</td>
+        <td><a class="btn red confirmDelete" href="/doctors/delete/{{ d.doctorId }}">Delete</a></td>
+    </tr>{% endfor %}
+</table></div>{% else %}<p class="empty">No doctors found.</p>{% endif %}
+</div>
+{% endblock %}

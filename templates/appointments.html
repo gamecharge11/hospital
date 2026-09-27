@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<h2>Appointments</h2>
+<div class="panel"><h3>Book appointment</h3>
+{% if patientList and doctorList %}
+<form method="post" class="grid">
+    <select name="patientId" required>{% for p in patientList %}<option value="{{ p.patientId }}">{{ p.name }} (#{{ p.patientId }})</option>{% endfor %}</select>
+    <select name="doctorId" required>{% for d in doctorList %}<option value="{{ d.doctorId }}">Dr. {{ d.name }} - {{ d.specialisation }}</option>{% endfor %}</select>
+    <input name="apptDate" type="date" min="{{ today }}" required>
+    <input name="apptTime" type="time" required>
+    <button type="submit">Book appointment</button>
+</form>
+{% else %}<p class="empty">Add at least one patient and one doctor before booking.</p>{% endif %}
+</div>
+<div class="panel">
+{% if apptList %}<div class="tableWrap"><table>
+    <tr><th>ID</th><th>Date</th><th>Time</th><th>Patient</th><th>Doctor</th><th>Status</th><th></th></tr>
+    {% for a in apptList %}<tr>
+        <td>{{ a.apptId }}</td><td>{{ a.apptDate }}</td><td>{{ a.apptTime }}</td><td>{{ a.patientName }}</td>
+        <td>Dr. {{ a.doctorName }} ({{ a.specialisation }})</td><td>{{ a.status }}</td>
+        <td>{% if a.status == "Scheduled" %}
+            <a class="btn green" href="/appointments/status/{{ a.apptId }}/Completed">Complete</a>
+            <a class="btn grey" href="/appointments/status/{{ a.apptId }}/Cancelled">Cancel</a>
+        {% endif %}
+            <a class="btn red confirmDelete" href="/appointments/delete/{{ a.apptId }}">Delete</a></td>
+    </tr>{% endfor %}
+</table></div>{% else %}<p class="empty">No appointments yet.</p>{% endif %}
+</div>
+{% endblock %}

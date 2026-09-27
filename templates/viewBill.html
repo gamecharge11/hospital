@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Bill #{{ b.billId }}{% endblock %}
+{% block content %}
+<div class="panel" style="max-width:600px;margin:auto">
+    <h2>City Care Hospital</h2>
+    <p><b>Bill #{{ b.billId }}</b> &nbsp; Date: {{ b.billDate }}</p><br>
+    <p>Patient: {{ b.patientName }} ({{ b.age }}, {{ b.gender }})</p>
+    <p>Phone: {{ b.phone }}</p>
+    <p>Doctor: Dr. {{ b.doctorName }}, {{ b.specialisation }}</p>
+    <p>Visit date: {{ b.apptDate }}</p><br>
+    <table>
+        <tr><td>Consultation fee</td><td>Rs {{ "%.2f"|format(b.consultationFee) }}</td></tr>
+        <tr><td>Medicine charges</td><td>Rs {{ "%.2f"|format(b.medicineCharges) }}</td></tr>
+        <tr><td>Room charges</td><td>Rs {{ "%.2f"|format(b.roomCharges) }}</td></tr>
+        <tr><th>Total</th><th>Rs {{ "%.2f"|format(b.total) }}</th></tr>
+    </table><br>
+    <div class="row noPrint">
+        <button onclick="window.print()">Print bill</button>
+        <a class="btn grey" href="/bills">Back to billing</a>
+    </div>
+</div>
+{% endblock %}

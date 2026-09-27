@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Dashboard</h2>
+<div class="stats">
+    <div class="stat"><b>{{ stats.patients }}</b>Registered patients</div>
+    <div class="stat"><b>{{ stats.doctors }}</b>Doctors</div>
+    <div class="stat"><b>{{ stats.scheduled }}</b>Upcoming appointments</div>
+    <div class="stat"><b>Rs {{ "%.2f"|format(stats.revenue) }}</b>Total revenue</div>
+</div>
+<div class="panel"><h3>Today's appointments</h3>
+{% if todayAppts %}<div class="tableWrap"><table>
+    <tr><th>Time</th><th>Patient</th><th>Doctor</th><th>Status</th></tr>
+    {% for a in todayAppts %}<tr><td>{{ a.apptTime }}</td><td>{{ a.patientName }}</td><td>{{ a.doctorName }}</td><td>{{ a.status }}</td></tr>{% endfor %}
+</table></div>{% else %}<p class="empty">No appointments today.</p>{% endif %}
+</div>
+<div class="panel"><h3>Appointments per doctor</h3>
+{% if doctorLoad %}<div class="tableWrap"><table>
+    <tr><th>Doctor</th><th>Specialisation</th><th>Appointments</th></tr>
+    {% for d in doctorLoad %}<tr><td>{{ d.name }}</td><td>{{ d.specialisation }}</td><td>{{ d.apptCount }}</td></tr>{% endfor %}
+</table></div>{% else %}<p class="empty">Add a doctor to see their workload here.</p>{% endif %}
+</div>
+{% endblock %}

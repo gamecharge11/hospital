@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Billing{% endblock %}
+{% block content %}
+<h2>Billing</h2>
+<div class="panel"><h3>Generate bill</h3>
+{% if unbilled %}
+<form method="post" class="grid">
+    <select name="apptId" required>{% for u in unbilled %}<option value="{{ u.apptId }}">#{{ u.apptId }} {{ u.patientName }} with Dr. {{ u.doctorName }} (fee Rs {{ u.fee }})</option>{% endfor %}</select>
+    <input name="medicineCharges" type="number" step="0.01" min="0" placeholder="Medicine charges">
+    <input name="roomCharges" type="number" step="0.01" min="0" placeholder="Room charges">
+    <button type="submit">Generate bill</button>
+</form>
+{% else %}<p class="empty">Mark an appointment as completed to bill it here.</p>{% endif %}
+</div>
+<div class="panel"><h3>All bills</h3>
+{% if billList %}<div class="tableWrap"><table>
+    <tr><th>Bill ID</th><th>Date</th><th>Patient</th><th>Total</th><th></th></tr>
+    {% for b in billList %}<tr>
+        <td>{{ b.billId }}</td><td>{{ b.billDate }}</td><td>{{ b.patientName }}</td>
+        <td>Rs {{ "%.2f"|format(b.total) }}</td><td><a class="btn" href="/bills/{{ b.billId }}">View</a></td>
+    </tr>{% endfor %}
+</table></div>{% else %}<p class="empty">No bills generated yet.</p>{% endif %}
+</div>
+{% endblock %}

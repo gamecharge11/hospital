@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Edit Patient{% endblock %}
+{% block content %}
+<h2>Edit patient #{{ p.patientId }}</h2>
+<div class="panel"><form method="post" class="grid">
+    <input name="name" value="{{ p.name }}" required>
+    <input name="age" type="number" value="{{ p.age }}" required>
+    <select name="gender">{% for g in ["Male", "Female", "Other"] %}<option {% if g == p.gender %}selected{% endif %}>{{ g }}</option>{% endfor %}</select>
+    <input name="phone" value="{{ p.phone }}" required>
+    <input name="address" value="{{ p.address }}">
+    <select name="bloodGroup">{% for bg in bloodGroups %}<option {% if bg == p.bloodGroup %}selected{% endif %}>{{ bg }}</option>{% endfor %}</select>
+    <button type="submit">Save changes</button>
+    <a class="btn grey" href="/patients">Cancel</a>
+</form></div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<h2>Patients</h2>
+<div class="panel"><h3>Add patient</h3>
+<form method="post" class="grid">
+    <input name="name" placeholder="Full name" required>
+    <input name="age" type="number" min="0" max="120" placeholder="Age" required>
+    <select name="gender"><option>Male</option><option>Female</option><option>Other</option></select>
+    <input name="phone" placeholder="Phone" required>
+    <input name="address" placeholder="Address">
+    <select name="bloodGroup">{% for bg in bloodGroups %}<option>{{ bg }}</option>{% endfor %}</select>
+    <button type="submit">Add patient</button>
+</form></div>
+<div class="panel">
+<form method="get" class="row">
+    <input name="search" placeholder="Search by name" value="{{ searchText }}" style="max-width:300px">
+    <button type="submit">Search</button>
+    {% if searchText %}<a class="btn grey" href="/patients">Clear</a>{% endif %}
+</form>
+{% if patientList %}<div class="tableWrap"><table>
+    <tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Phone</th><th>Blood group</th><th>Registered</th><th></th></tr>
+    {% for p in patientList %}<tr>
+        <td>{{ p.patientId }}</td><td>{{ p.name }}</td><td>{{ p.age }}</td><td>{{ p.gender }}</td>
+        <td>{{ p.phone }}</td><td>{{ p.bloodGroup }}</td><td>{{ p.regDate }}</td>
+        <td><a class="btn" href="/patients/edit/{{ p.patientId }}">Edit</a>
+        <a class="btn red confirmDelete" href="/patients/delete/{{ p.patientId }}">Delete</a></td>
+    </tr>{% endfor %}
+</table></div>{% else %}<p class="empty">No patients found.</p>{% endif %}
+</div>
+{% endblock %}

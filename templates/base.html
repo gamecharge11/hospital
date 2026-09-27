@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: #eef4f3;
+        color: #1d2b2a;
+      }
+      nav {
+        background: #0f5257;
+        padding: 14px 32px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: center;
+      }
+      nav h1 {
+        color: #fff;
+        font-size: 20px;
+        margin-right: auto;
+      }
+      nav a {
+        color: #bfe3dd;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      main {
+        max-width: 1100px;
+        margin: 28px auto;
+        padding: 0 20px;
+      }
+      h2 {
+        color: #0f5257;
+        margin-bottom: 16px;
+      }
+      h3 {
+        margin-bottom: 12px;
+      }
+      .panel {
+        background: #fff;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 22px;
+        border: 1px solid #d5e4e1;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+      .stat {
+        background: #fff;
+        border-top: 4px solid #2a9d8f;
+        padding: 16px;
+        border-radius: 6px;
+      }
+      .stat b {
+        display: block;
+        font-size: 28px;
+        color: #0f5257;
+      }
+      form.grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 12px;
+      }
+      input,
+      select {
+        padding: 9px;
+        border: 1px solid #b9cfcb;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 14px;
+      }
+      button,
+      .btn {
+        background: #0f5257;
+        color: #fff;
+        border: none;
+        padding: 9px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 13px;
+        display: inline-block;
+      }
+      .btn.red {
+        background: #b23a3a;
+      }
+      .btn.green {
+        background: #2a9d8f;
+      }
+      .btn.grey {
+        background: #6c7a78;
+      }
+      .tableWrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #e3ecea;
+      }
+      th {
+        background: #e2f0ed;
+      }
+      .flash {
+        background: #fff6d6;
+        border: 1px solid #f0d77a;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .empty {
+        color: #6c7a78;
+        padding: 12px 0;
+      }
+      @media print {
+        nav,
+        .noPrint {
+          display: none;
+        }
+        body {
+          background: #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>Hospital Management System</h1>
+      <a href="/">Dashboard</a><a href="/patients">Patients</a>
+      <a href="/doctors">Doctors</a><a href="/appointments">Appointments</a
+      ><a href="/bills">Billing</a>
+    </nav>
+    <main>
+      {% for msg in get_flashed_messages() %}
+      <div class="flash">{{ msg }}</div>
+      {% endfor %} {% block content %}{% endblock %}
+    </main>
+    <script>
+      document.querySelectorAll(".confirmDelete").forEach((link) =>
+        link.addEventListener("click", (e) => {
+          if (!confirm("Delete this record? This cannot be undone."))
+            e.preventDefault();
+        }),
+      );
+    </script>
+  </body>
+</html>
