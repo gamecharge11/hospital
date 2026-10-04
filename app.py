@@ -5,7 +5,7 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = "hospitalSecretKey"
 
-dbConfig = {"host": "localhost", "user": "root", "password": "root123"}
+dbConfig = {"host": "localhost", "user": "root", "password": "root123", "use_pure": True}
 dbName = "hospitalDb"
 bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
 
